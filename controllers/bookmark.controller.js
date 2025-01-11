@@ -1,4 +1,6 @@
 const User = require('../model/user.model');
+const Movie = require('../model/movie.model');
+const TV = require('../model/tv.model');
 
 const bookmarkItem = async (req, res) => {
     const { userId, itemId, type } = req.body;
@@ -13,40 +15,47 @@ const bookmarkItem = async (req, res) => {
 
     try {
         const user = await User.findById(userId);
-        console.log("User found:", user);
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // Initialize bookmarks if undefined
+        // Ensure bookmarks array is defined
         if (!user.bookmarks) {
             user.bookmarks = [];
         }
 
+        // Convert itemId to a consistent type (string) for comparison
+        const normalizedItemId = String(itemId);
+
+        // Check if the bookmark already exists
         const existingBookmark = user.bookmarks.find(
-            (bookmark) => bookmark.itemId === itemId && bookmark.type === type
+            (bookmark) => bookmark.itemId === normalizedItemId && bookmark.type === type
         );
 
-        if (!existingBookmark) {
-            user.bookmarks.push({ itemId, type });
-            await user.save();
-            console.log("Bookmark added successfully:", user.bookmarks);
-            return res.status(200).json({ message: "Item bookmarked successfully", bookmarks: user.bookmarks });
+        if (existingBookmark) {
+            return res.status(409).json({
+                message: "Item already bookmarked",
+                bookmark: existingBookmark,
+                bookmarks: user.bookmarks,
+            });
         }
 
-        console.log("Bookmark already exists:", user.bookmarks);
-        return res.status(200).json({ message: "Item already bookmarked", bookmarks: user.bookmarks });
+        // Add the new bookmark
+        const newBookmark = { itemId: normalizedItemId, type };
+        user.bookmarks.push(newBookmark);
+        await user.save();
+
+        return res.status(201).json({
+            message: "Item bookmarked successfully",
+            bookmark: newBookmark,
+            bookmarks: user.bookmarks,
+        });
     } catch (error) {
         console.error("Error bookmarking item:", error);
         res.status(500).json({ message: "Internal server error", error: error.message });
     }
 };
-
-
-
-const Movie = require('../model/movie.model');
-const TV = require('../model/tv.model');
 
 const getBookmarks = async (req, res) => {
     const { userId } = req.query;
@@ -79,7 +88,6 @@ const getBookmarks = async (req, res) => {
     }
 };
 
-
 const deleteBookmark = async (req, res) => {
     const { userId, itemId, type } = req.body;
 
@@ -87,7 +95,7 @@ const deleteBookmark = async (req, res) => {
         return res.status(400).json({ message: "User ID, Item ID, and Type are required" });
     }
 
-    if (!['movie', 'tv'].includes(type)) {
+    if (!['movie', 'tv'].includes(type.toLowerCase())) {
         return res.status(400).json({ message: "Invalid type. Must be 'movie' or 'tv'" });
     }
 
@@ -98,10 +106,18 @@ const deleteBookmark = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // Find and remove the bookmark based on itemId and type
+        console.log("User's bookmarks:", JSON.stringify(user.bookmarks, null, 2));
+        console.log("Input data:", { userId, itemId, type });
+
+        // Normalize data for comparison
+        const normalizedType = type.toLowerCase();
         const index = user.bookmarks.findIndex(
-            (bookmark) => bookmark.itemId === itemId && bookmark.type === type
+            (bookmark) =>
+                String(bookmark.itemId) === String(itemId) &&
+                String(bookmark.type).toLowerCase() === normalizedType
         );
+
+        console.log("Index found:", index);
 
         if (index === -1) {
             return res.status(404).json({ message: "Bookmark not found" });
@@ -118,6 +134,7 @@ const deleteBookmark = async (req, res) => {
         res.status(500).json({ message: "Internal server error", error: error.message });
     }
 };
+
 
 
 

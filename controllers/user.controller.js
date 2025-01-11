@@ -55,6 +55,31 @@ const signup = async (req, res) => {
     }
 };
 
+const logout = async (req, res) => {
+    try {
+        // Attempt to read the token from cookies or headers
+        const token = req.cookies?.token || req.headers?.authorization?.split(" ")[1];
+
+        if (!token) {
+            return res.status(400).json({ message: 'Token not found, cannot logout' });
+        }
+
+        // Clear the token cookie if present
+        if (req.cookies?.token) {
+            res.clearCookie('token', { httpOnly: true, secure: true, sameSite: 'Strict' });
+        }
+
+        // If using a token blacklist, add the token here
+        // Example: blacklist.push(token);
+
+        res.status(200).json({ message: 'Logout successful' });
+    } catch (error) {
+        console.error('Error during logout:', error.message);
+        res.status(500).json({ message: 'Server error during logout' });
+    }
+};
+
+
 const getUserData = async (req, res) => {
     try {
         console.log('UserId from token:', req.userId);  // Log the userId
@@ -71,4 +96,4 @@ const getUserData = async (req, res) => {
     }
 };
 
-module.exports = { signup, login, getUserData };
+module.exports = { signup, login, logout, getUserData };
