@@ -5,7 +5,7 @@ const {tvPopulate, getAllTvs, getLatestTvs, getTvUrl, tvCast} = require('../cont
 router.get('/populate', tvPopulate)
 router.get('/getAlltv', getAllTvs)
 router.get('/getLatestTvs', getLatestTvs)
-router.get('/getTvUrl/:search', getTvUrl)
+router.get('/getTv/:search', getTvUrl)
 router.get('/getTvcast/:id', tvCast)
 
 module.exports = router

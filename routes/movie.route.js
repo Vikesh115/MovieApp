@@ -6,7 +6,7 @@ const {verifyJWT} = require('../middleware/auth.middleware')
 router.get('/populate', moviePopulate)
 router.get('/getAllMovie', getAllMovies)
 router.get('/getLatestMovie', getLatestMovies)
-router.get('/getMovieUrl/:search', getMovieUrl)
+router.get('/getMovie/:search', getMovieUrl)
 router.get('/getMoviecast/:id',verifyJWT, movieCast)
 
 module.exports = router;
