@@ -1,12 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const {moviePopulate, getAllMovies, getLatestMovies, getMovieUrl, movieCast} = require('../controllers/movie.controller')
-const {verifyJWT} = require('../middleware/auth.middleware')
+const {moviePopulate, getAllMovies, searchMovie, movieCast} = require('../controllers/movie.controller')
 
 router.get('/populate', moviePopulate)
 router.get('/getAllMovie', getAllMovies)
-router.get('/getLatestMovie', getLatestMovies)
-router.get('/getMovie/:search', getMovieUrl)
-router.get('/getMoviecast/:id',verifyJWT, movieCast)
+router.get('/getMovie/:search', searchMovie)
+router.get('/getMoviecast/:id', movieCast)
 
 module.exports = router;

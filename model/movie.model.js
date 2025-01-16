@@ -15,6 +15,7 @@ const movieModel = mongoose.Schema({
     "video": Boolean,
     "vote_average": Number,
     "vote_count": Number,
+    "media_type": { type: String, default: 'movie'},
     "cast": [
         {
             id: Number, // TMDB Cast ID

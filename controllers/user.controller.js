@@ -79,7 +79,6 @@ const logout = async (req, res) => {
     }
 };
 
-
 const getUserData = async (req, res) => {
     try {
         console.log('UserId from token:', req.userId);  // Log the userId

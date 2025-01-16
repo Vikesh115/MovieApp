@@ -61,7 +61,6 @@ const tvCast =  async (req, res) => {
     }
 };
 
-
 // /tv/populate
 const tvPopulate =  async (req, res) => {
     try {
@@ -89,41 +88,13 @@ const getAllTvs = async(req,res) =>{
    }
 }
 
-const getLatestTvs = async (req, res) => {
-    try {
-        const { search } = req.query;
-
-        // Build query based on the search parameter
-        const query = search
-            ? { title: { $regex: search, $options: 'i' } } // Case-insensitive search
-            : {};
-
-        // Fetch latest 14 tvs sorted by popularity in descending order
-        const tvs = await tvModel
-            .find(query)
-            .sort({ popularity: -1 })
-            .limit(14);
-
-        // If no movies found, return 404
-        if (tvs.length === 0) {
-            return res.status(404).json({ message: 'Tv Not Found' });
-        }
-
-        // Return movies with a 200 status
-        res.status(200).json({ tvs });
-    } catch (error) {
-        console.error('Error fetching tvs :', error.message);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-};
-
 // localhost:8000/tv/getTvUrl/Absolution
-const getTvUrl = async (req, res) => {
+const searchTv = async (req, res) => {
     try {
         const { search } = req.params;
 
         // Find the tv matching the search term
-        const tv = await tvModel.findOne({
+        const tv = await tvModel.find({
             name: { $regex: search, $options: 'i' } // Case-insensitive search
         });
 
@@ -140,4 +111,4 @@ const getTvUrl = async (req, res) => {
     }
 };
 
-module.exports = { tvPopulate, getAllTvs, getLatestTvs, getTvUrl, tvCast }
+module.exports = { tvPopulate, getAllTvs, searchTv, tvCast }

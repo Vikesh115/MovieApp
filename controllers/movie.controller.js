@@ -61,8 +61,6 @@ const movieCast =  async (req, res) => {
     }
 };
 
-
-
 // /movie/populate
 const moviePopulate =  async (req, res) => {
     try {
@@ -91,43 +89,13 @@ const getAllMovies = async(req,res) =>{
    }
 }
 
-// localhost:8000/movie/getLatestMovie
-//localhost:8000/movie/getLatestMovie?search=Your Fault
-const getLatestMovies = async (req, res) => {
-    try {
-        const { search } = req.query;
-
-        // Build query based on the search parameter
-        const query = search
-            ? { title: { $regex: search, $options: 'i' } } // Case-insensitive search
-            : {};
-
-        // Fetch latest 14 movies sorted by popularity in descending order
-        const movies = await movieModel
-            .find(query)
-            .sort({ popularity: -1 })
-            .limit(14);
-
-        // If no movies found, return 404
-        if (movies.length === 0) {
-            return res.status(404).json({ message: 'Movie Not Found' });
-        }
-
-        // Return movies with a 200 status
-        res.status(200).json({ movies });
-    } catch (error) {
-        console.error('Error fetching movies:', error.message);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
-};
-
 // localhost:8000/movie/getMovieUrl/Absolution
-const getMovieUrl = async (req, res) => {
+const searchMovie = async (req, res) => {
     try {
         const { search } = req.params;
 
         // Find the movie matching the search term
-        const movie = await movieModel.findOne({
+        const movie = await movieModel.find({
             title: { $regex: search, $options: 'i' } // Case-insensitive search
         });
 
@@ -144,4 +112,4 @@ const getMovieUrl = async (req, res) => {
     }
 };
 
-module.exports = {moviePopulate, getAllMovies, getLatestMovies, getMovieUrl, movieCast}
+module.exports = {moviePopulate, getAllMovies, searchMovie, movieCast}
