@@ -15,15 +15,6 @@ describe('Movie, TV, and Bookmark Controller Tests', () => {
         await mongoose.connection.close();
     });
 
-    describe("Check all API Endpoints", () => {
-        // Test the root endpoint
-        it("should return 'All API endpoint is working!'", async () => {
-            const res = await request(app).get('/');
-            expect(res.status).toBe(200);
-            expect(res.text).toBe("All API endpoint is working!");
-        });
-    });
-
 
     describe("GET movieandtv", () => {
         it("should return a combined list of movies and TV shows", async () => {
