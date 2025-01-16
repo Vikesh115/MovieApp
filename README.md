@@ -2,16 +2,13 @@
 
 ## (*Entertainment App backend*)
 
-> This is a backend part that provides APIs for managing entertainent app website details. This application is developed using Node.Js, express and MongoDB database. 
+> This is a backend part of entertainent movie that provides APIs for managing website details. This application is developed using Node.Js, express and MongoDB database. 
 
 
 ### APIs
 
 - "/docs" : Get Backend Documentation.
 - "/" : This default route will render "index.html" file.
-- "/subscribers" : This will respond with an array of subscribers.
-- "/subscribers/name" : This will respond with an array of subscribers with only two fields, name and subscribedChannel.
-- "/subscribers/:id : This will response with the details of subscriber whose id is provided.
 
 
 ### Prerequisites (Installation)
@@ -35,14 +32,12 @@
 ### Run
 Git commands: 
 
-git clone  https://github.com/Vikesh115/Youtube-Subscribers-Project.git
+git clone  https://github.com/Vikesh115/MovieApp-backend.git
 npm istall
-
-node src/createDatabase.js
 nodemon index.js
 
 ### test
-- npx jest
+- npx test
 
 ### Project created by
 Vikesh Raut
