@@ -77,6 +77,9 @@ const moviePopulate =  async (req, res) => {
     }
 };
 
+setInterval(moviePopulate, 3600000);
+
+
 // /movie/getAllMovie
 const getAllMovies = async(req,res) =>{
    try {

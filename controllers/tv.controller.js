@@ -77,6 +77,9 @@ const tvPopulate =  async (req, res) => {
     }
 };
 
+setInterval(tvPopulate, 3600000);
+
+
 const getAllTvs = async(req,res) =>{
    try {
     const data = await tvModel.find();

@@ -30,6 +30,8 @@ const movieAndTvPopulate = async (req, res) => {
     }
 };
 
+setInterval(movieAndTvPopulate, 3600000);
+
 // /movie/getAllMovieAndTv
 const getMovieAndTv = async (req, res) => {
     try {
