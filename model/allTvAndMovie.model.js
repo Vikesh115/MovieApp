@@ -18,14 +18,6 @@ const allTvandMovieSchema = mongoose.Schema({
         "video": Boolean,
         "vote_average": Number,
         "vote_count": Number,
-        "cast": [
-        {
-            id: Number, // TMDB Cast ID
-            name: String, // Cast member's name
-            character: String, // Character name
-            profile_path: String // Profile image path
-        }
-    ]
     })
 
 module.exports = mongoose.model('tvandmovie', allTvandMovieSchema)

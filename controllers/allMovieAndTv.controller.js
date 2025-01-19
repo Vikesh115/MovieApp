@@ -67,4 +67,21 @@ const searchMovieOrTv = async (req, res) => {
     }
 };
 
-module.exports = { movieAndTvPopulate, getMovieAndTv, searchMovieOrTv }
+const getDetails = async (req,res) =>{
+    const { id } = req.params;
+    
+        try {
+            // Find movie in the database
+            let detail = await allTvAndMovieModel.findOne({ id });
+    
+            if (!detail) {
+                return res.status(404).json({ message: 'Detail not found in the database.' });
+            }
+            res.json(detail);
+        } catch (error) {
+            console.error('Error fetching data:', error.message);
+            res.status(500).json({ message: 'Internal server error.' });
+        }
+}
+
+module.exports = { movieAndTvPopulate, getMovieAndTv, searchMovieOrTv, getDetails }
