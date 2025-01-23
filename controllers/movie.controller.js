@@ -77,7 +77,9 @@ const moviePopulate =  async (req, res) => {
     }
 };
 
-setInterval(moviePopulate, 3600000);
+const timeoutDuration = 24 * 60 * 60 * 1000; // 86400000 milliseconds
+
+setInterval(moviePopulate, timeoutDuration);
 
 
 // /movie/getAllMovie

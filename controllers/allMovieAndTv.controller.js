@@ -30,7 +30,9 @@ const movieAndTvPopulate = async (req, res) => {
     }
 };
 
-setInterval(movieAndTvPopulate, 3600000);
+const timeoutDuration = 24 * 60 * 60 * 1000; // 86400000 milliseconds
+
+setInterval(movieAndTvPopulate, timeoutDuration);
 
 // /movie/getAllMovieAndTv
 const getMovieAndTv = async (req, res) => {

@@ -77,7 +77,9 @@ const tvPopulate =  async (req, res) => {
     }
 };
 
-setInterval(tvPopulate, 3600000);
+const timeoutDuration = 24 * 60 * 60 * 1000; // 86400000 milliseconds
+
+setInterval(tvPopulate, timeoutDuration);
 
 
 const getAllTvs = async(req,res) =>{
