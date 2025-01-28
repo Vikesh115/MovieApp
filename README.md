@@ -1,4 +1,3 @@
-# *AlmaBetter capstone Entertainment App Full Stack Project*
 
 ## (*Entertainment App backend*)
 
