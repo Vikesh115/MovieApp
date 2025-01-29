@@ -3,6 +3,7 @@ const Movie = require('../model/movie.model');
 const TV = require('../model/tv.model');
 const TvAndMovie = require('../model/allTvAndMovie.model')
 
+// get
 const getBookmarks = async (req, res) => {
     const { userId } = req.query;
 
