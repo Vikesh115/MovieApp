@@ -6,6 +6,7 @@ const userSchema = mongoose.Schema({
     bookmarks: [
         {
             itemId: Number, // ID of the movie or TV show
+            isBookmarked: {type: Boolean, default: 0},
             type: { type: String, enum: ['movie', 'tv'], required: true } // Type discriminator
         }
     ],
