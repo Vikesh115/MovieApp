@@ -4,7 +4,7 @@ const {login, signup, logout, getUserData} = require('../controllers/user.contro
 const {toggleBookmark, getBookmarks, searchBookmark} = require('../controllers/bookmark.controller')
 const {verifyJWT} = require('../middleware/auth.middleware')
 
-router.get('/togglebookmark', toggleBookmark)
+router.post('/togglebookmark', toggleBookmark)
 router.get('/getbookmark', getBookmarks)
 router.post('/searchbookmark', searchBookmark)
 router.post("/signup", signup)
