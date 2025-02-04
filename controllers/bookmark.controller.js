@@ -50,48 +50,8 @@ const getBookmarks = async (req, res) => {
     }
 };
 
-// const toggleBookmark = async (req, res) => {
-//     const { userId, itemId, type } = req.body;
-
-//     if (!userId || !itemId || !type) {
-//         return res.status(400).json({ message: "User ID, Item ID, and Type are required" });
-//     }
-
-//     try {
-//         const user = await User.findById(userId);
-//         if (!user) {
-//             return res.status(404).json({ message: "User not found" });
-//         }
-
-//         // Convert itemId to a string for consistency
-//         const normalizedItemId = String(itemId);
-
-//         // Check if the bookmark exists
-//         const existingBookmarkIndex = user.bookmarks.findIndex(
-//             (bookmark) => String(bookmark.itemId) === normalizedItemId && bookmark.type === type
-//         );
-
-//         if (existingBookmarkIndex !== -1) {
-//             // If the bookmark exists, remove it (toggle off)
-//             user.bookmarks.splice(existingBookmarkIndex, 1);
-//             await user.save();
-//             return res.status(200).json({ message: "Bookmark removed successfully", bookmarks: user.bookmarks });
-//         }
-
-//         // If the bookmark does not exist, add it (toggle on)
-//         const newBookmark = { itemId: normalizedItemId, type };
-//         user.bookmarks.push(newBookmark);
-//         await user.save();
-
-//         return res.status(201).json({ message: "Bookmark added successfully", bookmarks: user.bookmarks });
-//     } catch (error) {
-//         console.error("Error toggling bookmark:", error.message);
-//         res.status(500).json({ message: "Internal server error", error: error.message });
-//     }
-// };
-
 const toggleBookmark = async (req, res) => {
-    const { userId, itemId, type, isBookmarked } = req.body;
+    const { userId, itemId, type } = req.body;
 
     if (!userId || !itemId || !type) {
         return res.status(400).json({ message: "User ID, Item ID, and Type are required" });
@@ -119,7 +79,7 @@ const toggleBookmark = async (req, res) => {
         }
 
         // If the bookmark does not exist, add it (toggle on)
-        const newBookmark = { itemId: normalizedItemId, type, isBookmarked: isBookmarked || true }; // Accept isBookmarked from request
+        const newBookmark = { itemId: normalizedItemId, type };
         user.bookmarks.push(newBookmark);
         await user.save();
 
@@ -129,8 +89,6 @@ const toggleBookmark = async (req, res) => {
         res.status(500).json({ message: "Internal server error", error: error.message });
     }
 };
-
-
 
 const searchBookmark = async (req, res) => {
     try {
